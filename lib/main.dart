@@ -46,8 +46,34 @@ class MyHomePage extends StatelessWidget {
               // create cards with our transactions
               ...transactions.map((transaction)  {
                 return Card(
-                  child: Text(
-                    transaction.title,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+                    children: [
+                      Container(
+                        child: Text(
+                          transaction.amount.toString()
+                        ),
+                      ),
+
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+                        children: [
+                          Container(
+                            child: Text(
+                              transaction.title
+                            ),
+                          ),
+
+                          Container(
+                            child: Text(
+                              transaction.date.toString()
+                            ),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 );
               })
