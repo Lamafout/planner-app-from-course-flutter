@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import './transaction.dart';
 
@@ -19,8 +20,8 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
 
   final List<Transaction> transactions = [
-    Transaction(id: 1, title: 'Laptop', amount: 100000, date: DateTime.now()),
-    Transaction(id: 2, title: 'Backpack', amount: 3000, date: DateTime.now()),
+    Transaction(id: 1, title: 'Laptop', amount: 100000.00, date: DateTime.now()),
+    Transaction(id: 2, title: 'Backpack', amount: 3000.00, date: DateTime.now()),
   ];
 
   @override
@@ -84,7 +85,7 @@ class MyHomePage extends StatelessWidget {
                         ),
 
                         child: Text(
-                          transaction.amount.toString(),
+                          '\u20BD${transaction.amount}',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -93,24 +94,36 @@ class MyHomePage extends StatelessWidget {
                         ),
                       ),
 
-                      Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(top: 10, bottom: 10),
+                      Container(
+                        padding: EdgeInsets.only(
+                          top: 15,
+                          bottom: 15
+                        ),
 
-                            child: Text(
-                              transaction.title
+                        child: Column(
+                          children: [
+                            Container(
+                        
+                              child: Text(
+                                transaction.title,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold
+                                ),
+                              ),
                             ),
-                          ),
-
-                          Container(
-                            margin: EdgeInsets.only(top: 10, bottom: 10),
-
-                            child: Text(
-                              transaction.date.toString()
-                            ),
-                          )
-                        ],
+                        
+                            Container(
+                        
+                              child: Text(
+                                DateFormat('dd MMM, yyyy').format(transaction.date),
+                                style: TextStyle(
+                                  color: const Color.fromARGB(255, 65, 65, 65)
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),
