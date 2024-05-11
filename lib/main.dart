@@ -40,6 +40,15 @@ class MyHomePage extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
+            child: Text(
+              'Header',
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.black,
+                fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
           Column(
             children: [
@@ -51,22 +60,52 @@ class MyHomePage extends StatelessWidget {
 
                     children: [
                       Container(
+                        padding: EdgeInsets.all(3),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          border: Border(
+                            left: BorderSide(
+                              width: 3,
+                              color: Colors.deepPurple
+                            ),
+                            top: BorderSide(
+                              width: 3,
+                              color: Colors.deepPurple
+                            ),
+                            right: BorderSide(
+                              width: 3,
+                              color: Colors.deepPurple
+                            ),
+                            bottom: BorderSide(
+                              width: 3,
+                              color: Colors.deepPurple
+                            )
+                          )
+                        ),
+
                         child: Text(
-                          transaction.amount.toString()
+                          transaction.amount.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.deepPurple
+                          ),
                         ),
                       ),
 
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-
                         children: [
                           Container(
+                            margin: EdgeInsets.only(top: 10, bottom: 10),
+
                             child: Text(
                               transaction.title
                             ),
                           ),
 
                           Container(
+                            margin: EdgeInsets.only(top: 10, bottom: 10),
+
                             child: Text(
                               transaction.date.toString()
                             ),
