@@ -1,6 +1,6 @@
-# planner_application
+# Planner application
 
-A new Flutter project.
+This project more harder then quiz, so I hope what I will learn Fluter deeper.
 
 ## Getting Started
 
