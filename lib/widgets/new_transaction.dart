@@ -4,8 +4,9 @@ class NewTransaction extends StatelessWidget {
 
   final TextEditingController titleController;
   final TextEditingController priceController;
+  final Function addNewTransaction;
 
-  NewTransaction(this.titleController, this.priceController);
+  NewTransaction({required this.titleController, required this.priceController, required this.addNewTransaction});
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +44,7 @@ class NewTransaction extends StatelessWidget {
                       ),
 
                       onPressed: () {
-                        // TODO logic
-                        
+                        addNewTransaction(title: titleController.text, price: double.parse(priceController.text));
                       },
                     )
                   ],
