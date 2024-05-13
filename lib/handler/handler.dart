@@ -1,22 +1,25 @@
 import 'package:http/http.dart' as http;
+import '../classes/transaction.dart';
 
-void postData({required String title, required DateTime date, required double price, required Function doSomething}) async{
-  var url = Uri.parse('../backend/response.go');
-  var data = {
-    title: title,
-    price: price,
-    date: date.toString()
-  };
+class PostSend{
+  void postData({required Transaction transaction, required Function doSomething}) async{
+    var url = Uri.parse('http://localhost:8080/post');
+    var data = {
+      'title': transaction.title,
+      'price': transaction.amount.toString(),
+      'date': transaction.date.toString()
+    };
 
-  var response = await http.post(
-    url,
-    body: data
-  );
+    var response = await http.post(
+      url,
+      body: data
+    );
 
-  if (response.statusCode == 200){
-    doSomething();
-  }
-  else{
-    print('Error: ${response.statusCode}');
+    if (response.statusCode == 200){
+      doSomething();
+    }
+    else{
+      print('Error: ${response.statusCode}');
+    }
   }
 }
