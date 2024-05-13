@@ -24,6 +24,10 @@ class MyHomePage extends StatelessWidget {
     Transaction(id: 2, title: 'Backpack', amount: 3000.00, date: DateTime.now()),
   ];
 
+  final titleController = TextEditingController();
+  final priceController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +43,9 @@ class MyHomePage extends StatelessWidget {
 
       body: Column(
         children: [
+
+          // Header
+
           Container(
             width: double.infinity,
             child: Text(
@@ -51,6 +58,55 @@ class MyHomePage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
+
+          // Diagram
+
+          Container(
+            padding: EdgeInsets.all(10),
+
+            child: Card(
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Name'
+                      ),
+
+                      controller: titleController,
+                    ),
+
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Price'
+                      ),
+
+                      controller: priceController,
+                    ),
+
+                    TextButton(
+                      child: Text(
+                        'Add new transaction',
+                        style: TextStyle(
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+
+                      onPressed: () {
+                        // TODO logic
+                        
+                      },
+                    )
+                  ],
+                ),
+              ),
+            )
+          ),
+
+          // Column of transactions
+
           Column(
             children: [
               // create cards with our transactions
