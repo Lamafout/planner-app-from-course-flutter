@@ -5,7 +5,7 @@ void postData({required String title, required DateTime date, required double pr
   var data = {
     title: title,
     price: price,
-    date: date
+    date: date.toString()
   };
 
   var response = await http.post(
