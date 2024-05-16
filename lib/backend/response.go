@@ -2,56 +2,53 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
-	"io"
 	"net/http"
 	"os"
+
+	"github.com/rs/cors"
 )
 
-type Response struct {
-	Title string  `json:"title"`
-	Price float64 `json:"price"`
-	Data  string  `json:"data"`
+type Data struct {
+	Id    string `json:"id"`
+	Title string `json:"title"`
+	Price string `json:"price"`
+	Date  string `json:"date"`
 }
 
 func main() {
-	http.HandleFunc("/post", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPost {
-			http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-			return
-		}
+	http.HandleFunc("/", addObjectHandler)
+	handler := cors.Default().Handler(http.HandlerFunc(addObjectHandler))
+	http.ListenAndServe(":8080", handler)
+}
 
-		body, err := io.ReadAll(r.Body)
-		if err != nil {
-			http.Error(w, "Error reading request body", http.StatusInternalServerError)
-			return
-		}
-		defer r.Body.Close()
-
-		var data Response
-		err = json.Unmarshal(body, &data)
-		if err != nil {
-			http.Error(w, "Error unmarshalling JSON", http.StatusInternalServerError)
-			return
-		}
-
-		jsonData, err := json.Marshal(data)
-		if err != nil {
-			http.Error(w, "Error marshalling json", http.StatusInternalServerError)
-			return
-		}
-
-		fileName := "./transactions.JSON"
-		err = os.WriteFile(fileName, jsonData, 0644)
-		if err != nil {
-			http.Error(w, "Error writing to file", http.StatusInternalServerError)
-			return
-		}
-
-	})
-
-	fmt.Println("Server starting on port 8080...")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		fmt.Printf("Failed to start server: %v\n", err)
+func addObjectHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
 	}
+
+	var obj Data
+	err := json.NewDecoder(r.Body).Decode(&obj)
+	if err != nil {
+		http.Error(w, "Failed to decode JSON object", http.StatusBadRequest)
+		return
+	}
+
+	err = saveObjectToFile(obj)
+	if err != nil {
+		http.Error(w, "Failed to save object to file", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Object saved successfully"))
+}
+
+func saveObjectToFile(obj Data) error {
+	data, err := json.Marshal(obj)
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile("transactions.json", data, 0644)
 }
