@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './new_transaction.dart';
 import './transactionList.dart';
 import '../classes/transaction.dart';
+import '../handler/handler.dart' as handler;
 
 class UserTransactions extends StatefulWidget {
 
@@ -27,8 +28,13 @@ class _UserTransactionsState extends State<UserTransactions> {
       amount: price, 
       date: DateTime.now());
 
+      var postTemp = handler.PostSend();
+
       setState(() {
-        _userTranscations.add(transaction);
+        postTemp.postData(
+          transaction: transaction,
+          doSomething: () {_userTranscations.add(transaction);}
+        );
       });
   }
 
