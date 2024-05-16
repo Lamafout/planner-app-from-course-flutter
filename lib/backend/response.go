@@ -45,10 +45,22 @@ func addObjectHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func saveObjectToFile(obj Data) error {
+	// запишем данные из файла в переменную
+	file, err := os.ReadFile("transactions.json")
+	if err != nil {
+		return err
+	}
+	fileModed := file[1 : len(file)-1]
+
+	// сделаем введённые пользователем данные json-ом
 	data, err := json.Marshal(obj)
 	if err != nil {
 		return err
 	}
+	dataModed := append([]byte{','}, data...)
 
-	return os.WriteFile("transactions.json", data, 0644)
+	// создаем новый срез, объединяя все части в правильном порядке
+	newFile := append(append(append([]byte{'['}, fileModed...), dataModed...), []byte{']'}...)
+
+	return os.WriteFile("transactions.json", newFile, 0644)
 }
