@@ -18,7 +18,7 @@ type Data struct {
 func main() {
 	http.HandleFunc("/", addObjectHandler)
 	handler := cors.Default().Handler(http.HandlerFunc(addObjectHandler))
-	http.ListenAndServe(":8080", handler)
+	http.ListenAndServe("0.0.0.0:8080", handler)
 }
 
 func addObjectHandler(w http.ResponseWriter, r *http.Request) {
